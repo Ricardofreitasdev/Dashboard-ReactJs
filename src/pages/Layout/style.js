@@ -7,8 +7,9 @@ export default makeStyles(theme => ({
     flexDirection: 'row'
    },
    container: {
-      backgroundColor: 'blue',
+      backgroundColor: '#F8F7FC',
       width: '100vw',
-      height: '100vh'
+      height: '100vh',
+      padding: '32px'
    }
   }));

@@ -12,6 +12,9 @@ import { Link } from "react-router-dom";
 import image from "../../assets/images/user.png";
 import UserContext from "../../context/UserContext";
 import SidebarAvatar from "./components/SidebarAvatar";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import PersonIcon from '@mui/icons-material/Person';
+import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 
 export default function Sidebar(props) {
   const { setToken } = useContext(UserContext);
@@ -22,30 +25,38 @@ export default function Sidebar(props) {
   return (
     <div className={state ? styles.sidebar : styles.sidebar__close}>
       <Button onClick={() => setState(!state)}>close</Button>
-     <SidebarAvatar image={image} />
+      <SidebarAvatar image={image} />
       <nav className={styles.sidebar__nav}>
         <List>
+          <p>seja bem vindo, {user.name}</p>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/app/user">
+            <ListItemButton component={Link} to={"/app"}>
               <ListItemIcon>
-                <InboxIcon />
+                <SupervisorAccountIcon />
               </ListItemIcon>
-              {state && <ListItemText primary="Ver perfil" />}
+              {state && <ListItemText primary="Dashboard" />}
             </ListItemButton>
           </ListItem>
 
           <Divider />
-          {user.role === 'admin' && (
-              <p>admin</p>
-          )}
+
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={`/app/user/edit/${user.id}`}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              {state && <ListItemText primary="Minha conta" />}
+            </ListItemButton>
+          </ListItem>
+      
           <Divider />
 
           <ListItem disablePadding>
             <ListItemButton onClick={() => setToken(false)}>
               <ListItemIcon>
-                <InboxIcon />
+                <ExitToAppIcon sx={{ color: '#fff' }} />
               </ListItemIcon>
-              {state && <ListItemText primary="Sair" />}
+              {state && <ListItemText sx={{ color: '#fff' }} primary="Sair" />}
             </ListItemButton>
           </ListItem>
         </List>

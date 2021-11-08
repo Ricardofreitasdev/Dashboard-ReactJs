@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, TextField, Typography } from "@material-ui/core";
 import useStyles from "../style";
+import api from "../../../services/api";
+import { Alert } from "@mui/material";
+import UserContext from "../../../context/UserContext";
+import { useHistory } from "react-router";
+
 
 export default function FormRegister() {
   const styles = useStyles();
+  const [loginError, setLoginError] = useState("")
+  const { setToken } = useContext(UserContext);
+  const history = useHistory();
+
 
   const validationSchema = yup.object({
     email: yup
@@ -14,7 +23,7 @@ export default function FormRegister() {
       .required("Campo e-mail é obrigatório"),
     password: yup
       .string("sua senha...")
-      .min(8, "A senhas deve conter 8 digitos")
+      .min(6, "A senhas deve conter 6 digitos")
       .required("Campo senha é obrigatória"),
     name: yup
       .string("sseu nome...")
@@ -29,10 +38,25 @@ export default function FormRegister() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      const res = await createUser(values.name, values.email, values.password);    
+      if(res.data.error){
+        setLoginError(res.data.error)
+        return;
+      }
+
+      if(res.data.token){
+        setToken(res.data.token);
+        return history.push('/app');
+      }
+
     },
   });
+
+  async function createUser(name, email, password) {
+    const response = await api.post("create", { name, email, password });
+    return response;
+  }
 
   return (
     <>
@@ -82,7 +106,14 @@ export default function FormRegister() {
           helperText={
             RegisterFormik.touched.password && RegisterFormik.errors.password
           }
+
+          
         />
+
+        {loginError !== "" && (
+         <Alert severity="error">{loginError}</Alert>
+        )}
+
         <Button
           color="primary"
           variant="contained"
@@ -95,6 +126,7 @@ export default function FormRegister() {
         >
           Cadastrar
         </Button>
+        
       </form>
     </>
   );
