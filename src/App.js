@@ -4,6 +4,7 @@ import UserProvider from "./context/UserProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./themes/theme";
+import LayoutProvider from "./context/LayoutProvider";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
       <CssBaseline />
       <ThemeProvider theme={theme}>
         <UserProvider>
-          <Routes />
+          <LayoutProvider>
+            <Routes />
+          </LayoutProvider>
         </UserProvider>
       </ThemeProvider>
     </>

@@ -8,10 +8,19 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     width: "60%",
     height: "100vh",
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+
   },
   container__form: {
     width: "40%",
     height: "100vh",
+    [theme.breakpoints.down('sm')]: {
+      width: "100%",
+
+    },
   },
   container__form__wrapper: {
     padding: '32px',

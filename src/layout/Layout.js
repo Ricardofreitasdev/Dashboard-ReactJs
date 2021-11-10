@@ -14,10 +14,14 @@ export function Layout() {
   const { token } = useContext(UserContext);
   const [user, setUser] = useState([]);
 
-  useEffect(() => {
+  const getUser = () => {
     api
       .get("user", { headers: { token: token } })
       .then((user) => setUser(user.data));
+  };
+
+  useEffect(() => {
+    getUser();
   }, []);
 
   return (
@@ -26,13 +30,11 @@ export function Layout() {
       <div className={styles.wrapper}>
         <Header />
         <div className={styles.container}>
-
           {/* Aqui são exibidas as pages*/}
           <Switch>
             <Route path="/app/user/edit/:id" component={User} />
             <Route path="/app" component={App} />
           </Switch>
-
         </div>
       </div>
     </div>

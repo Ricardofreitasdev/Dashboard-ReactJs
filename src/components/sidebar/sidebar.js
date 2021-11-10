@@ -6,60 +6,87 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import image from "../../assets/images/user.jpeg";
-import UserContext from "../../context/UserContext";
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import PersonIcon from '@mui/icons-material/Person';
-import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import PersonIcon from "@mui/icons-material/Person";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SidebarAvatar from "../Avatar/SidebarAvatar";
+
+import UserContext from "../../context/UserContext";
+import LayoutContext from "../../context/LayoutContext";
 
 export default function Sidebar(props) {
   const { setToken } = useContext(UserContext);
+  const { sidebar, setSidebar } = useContext(LayoutContext);
+
   const user = props.user;
   const styles = useStyles();
-  const [state, setState] = useState(true);
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
+
+  const handleListItemClick = (event, index) => {
+    setSelectedIndex(index);
+  };
 
   return (
-    <div className={state ? styles.sidebar : styles.sidebar__close}>
-      {/* <Button onClick={() => setState(!state)}>close</Button> */}
-      <SidebarAvatar image={image} user={user.name}/>
-      <Divider />
-      <nav className={styles.sidebar__nav}>
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to={"/app"}>
-              <ListItemIcon>
-                <SupervisorAccountIcon className={styles.white} />
-              </ListItemIcon>
-              {state && <ListItemText className={styles.white} primary="Dashboard" />}
-            </ListItemButton>
-          </ListItem>
+    <>
+      <div
+        onClick={() => setSidebar(!sidebar)}
+        className={sidebar === true ? styles.sidebar__closer : ""}
+      ></div>
+      <div
+        className={sidebar === true ? styles.sidebar__mobile : styles.sidebar}
+      >
+        <SidebarAvatar image={image} user={user.name} />
 
-          <Divider />
+        <Divider />
+        <nav className={styles.sidebar__nav}>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to={"/app"}
+                selected={selectedIndex === 0}
+                onClick={(event) => handleListItemClick(event, 0)}
+              >
+                <ListItemIcon>
+                  <SupervisorAccountIcon className={styles.white} />
+                </ListItemIcon>
+                <ListItemText className={styles.white} primary="Dashboard" />
+              </ListItemButton>
+            </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to={`/app/user/edit/${user.id}`}>
-              <ListItemIcon>
-                <PersonIcon className={styles.white} />
-              </ListItemIcon>
-              {state && <ListItemText className={styles.white} primary="Minha conta" />}
-            </ListItemButton>
-          </ListItem>
-      
-          <Divider />
+            <Divider />
 
-          <ListItem disablePadding>
-            <ListItemButton onClick={() => setToken(false)}>
-              <ListItemIcon>
-                <ExitToAppIcon className={styles.white} />
-              </ListItemIcon>
-              {state && <ListItemText className={styles.white} primary="Sair" />}
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </nav>
-    </div>
+            <ListItem disablePadding>
+              <ListItemButton
+                component={Link}
+                to={`/app/user/edit/${user.id}`}
+                selected={selectedIndex === 1}
+                onClick={(event) => handleListItemClick(event, 1)}
+              >
+                <ListItemIcon>
+                  <PersonIcon className={styles.white} />
+                </ListItemIcon>
+
+                <ListItemText className={styles.white} primary="Minha conta" />
+              </ListItemButton>
+            </ListItem>
+
+            <Divider />
+
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setToken(false)}>
+                <ListItemIcon>
+                  <ExitToAppIcon className={styles.white} />
+                </ListItemIcon>
+
+                <ListItemText className={styles.white} primary="Sair" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </nav>
+      </div>
+    </>
   );
 }

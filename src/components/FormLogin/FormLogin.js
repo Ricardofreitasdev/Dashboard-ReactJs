@@ -1,7 +1,12 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, CircularProgress, TextField, Typography } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import useStyles from "../../pages/Login/style";
 import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router";
@@ -14,10 +19,8 @@ export default function FormLogin() {
   const { setToken } = useContext(UserContext);
   const history = useHistory();
 
- const [loginError, setLoginError] = useState("")
- const [loading, setLoading] = useState(false)
-
- 
+  const [loginError, setLoginError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validationSchema = yup.object({
     email: yup
@@ -42,19 +45,22 @@ export default function FormLogin() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
+      setLoading(true);
+      try {
+        const res = await login(values.email, values.password);
 
-      setLoading(true)
-      const res = await login(values.email, values.password);    
-      
-      if(res.data.error){
-        setLoginError(res.data.error)
-        setLoading(false)
+        if (res.data.error) {
+          setLoading(false);
+          setLoginError(res.data.error);
+          return;
+        }
 
-        return;
+        setToken(res.data.token);
+        return history.push("/app");
+      } catch (error) {
+        setLoading(false);
+        setLoginError("Problemas na conexão com o servidor");
       }
-
-      setToken(res.data.token);
-      return history.push('/app');
     },
   });
 
@@ -65,7 +71,6 @@ export default function FormLogin() {
         <TextField
           className={styles.container__form__input}
           variant="outlined"
-
           fullWidth
           id="email"
           name="email"
@@ -78,7 +83,6 @@ export default function FormLogin() {
         <TextField
           className={styles.container__form__input}
           variant="outlined"
-
           fullWidth
           id="password"
           name="password"
@@ -90,11 +94,9 @@ export default function FormLogin() {
           helperText={formik.touched.password && formik.errors.password}
         />
 
-        {loading &&  <CircularProgress />}
+        {loading && <CircularProgress />}
 
-        {loginError !== "" && (
-         <Alert severity="error">{loginError}</Alert>
-        )}
+        {loginError !== "" && <Alert severity="error">{loginError}</Alert>}
 
         <Button color="primary" size="large" variant="contained" type="submit">
           Enviar
