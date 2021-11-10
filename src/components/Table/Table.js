@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import useStyles from "../style";
+import useStyles from "./style";
 import MUIDataTable from "mui-datatables";
 import { useHistory } from "react-router-dom";
 import { Alert } from "@mui/material";
-import UserContext from "../../../context/UserContext";
-import api from "../../../services/api";
+import UserContext from "../../context/UserContext";
+import api from "../../services/api";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Button } from "@material-ui/core";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
@@ -98,8 +98,8 @@ export default function Table(props) {
     customToolbarSelect: (selectedRows, displayData) => (
       <div>
         <Button
+        className={styles.button__actions}
         variant="contained"
-        size="large"
         color="primary"
         startIcon={<DeleteForeverIcon />}
         onClick={() => deleteUser(selectedRows, displayData)}
@@ -107,8 +107,7 @@ export default function Table(props) {
         </Button>
 
         <Button
-        size="large"
-
+        className={styles.button__actions}
         variant="contained"
         color="secondary"
         startIcon={<ModeEditIcon />}
@@ -154,11 +153,9 @@ export default function Table(props) {
     },
   };
 
-  console.log(loggedUser.role);
   return (
     <>
       {errors && <Alert severity="error">Você não pode se excluir</Alert>}
-
       {deleted && (
         <Alert severity="success">Usuario excluído com sucesso</Alert>
       )}

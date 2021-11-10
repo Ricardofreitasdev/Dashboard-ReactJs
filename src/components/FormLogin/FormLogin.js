@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, CircularProgress, TextField, Typography } from "@material-ui/core";
-import useStyles from "../style";
-import UserContext from "../../../context/UserContext";
+import useStyles from "../../pages/Login/style";
+import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router";
-import api from "../../../services/api";
+import api from "../../services/api";
 import { Alert } from "@mui/material";
 
 export default function FormLogin() {
@@ -61,9 +61,11 @@ export default function FormLogin() {
   return (
     <>
       <Typography variant="h2">Faça Login!</Typography>
-      <form onSubmit={formik.handleSubmit}>
+      <form className={styles.form} onSubmit={formik.handleSubmit}>
         <TextField
           className={styles.container__form__input}
+          variant="outlined"
+
           fullWidth
           id="email"
           name="email"
@@ -75,6 +77,8 @@ export default function FormLogin() {
         />
         <TextField
           className={styles.container__form__input}
+          variant="outlined"
+
           fullWidth
           id="password"
           name="password"
@@ -92,7 +96,7 @@ export default function FormLogin() {
          <Alert severity="error">{loginError}</Alert>
         )}
 
-        <Button color="primary" variant="contained" type="submit">
+        <Button color="primary" size="large" variant="contained" type="submit">
           Enviar
         </Button>
       </form>

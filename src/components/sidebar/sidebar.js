@@ -6,15 +6,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import InboxIcon from "@mui/icons-material/Inbox";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import image from "../../assets/images/user.png";
+import image from "../../assets/images/user.jpeg";
 import UserContext from "../../context/UserContext";
-import SidebarAvatar from "./components/SidebarAvatar";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import PersonIcon from '@mui/icons-material/Person';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import SidebarAvatar from "../Avatar/SidebarAvatar";
 
 export default function Sidebar(props) {
   const { setToken } = useContext(UserContext);
@@ -24,17 +23,17 @@ export default function Sidebar(props) {
 
   return (
     <div className={state ? styles.sidebar : styles.sidebar__close}>
-      <Button onClick={() => setState(!state)}>close</Button>
-      <SidebarAvatar image={image} />
+      {/* <Button onClick={() => setState(!state)}>close</Button> */}
+      <SidebarAvatar image={image} user={user.name}/>
+      <Divider />
       <nav className={styles.sidebar__nav}>
         <List>
-          <p>seja bem vindo, {user.name}</p>
           <ListItem disablePadding>
             <ListItemButton component={Link} to={"/app"}>
               <ListItemIcon>
-                <SupervisorAccountIcon />
+                <SupervisorAccountIcon className={styles.white} />
               </ListItemIcon>
-              {state && <ListItemText primary="Dashboard" />}
+              {state && <ListItemText className={styles.white} primary="Dashboard" />}
             </ListItemButton>
           </ListItem>
 
@@ -43,9 +42,9 @@ export default function Sidebar(props) {
           <ListItem disablePadding>
             <ListItemButton component={Link} to={`/app/user/edit/${user.id}`}>
               <ListItemIcon>
-                <PersonIcon />
+                <PersonIcon className={styles.white} />
               </ListItemIcon>
-              {state && <ListItemText primary="Minha conta" />}
+              {state && <ListItemText className={styles.white} primary="Minha conta" />}
             </ListItemButton>
           </ListItem>
       
@@ -54,9 +53,9 @@ export default function Sidebar(props) {
           <ListItem disablePadding>
             <ListItemButton onClick={() => setToken(false)}>
               <ListItemIcon>
-                <ExitToAppIcon sx={{ color: '#fff' }} />
+                <ExitToAppIcon className={styles.white} />
               </ListItemIcon>
-              {state && <ListItemText sx={{ color: '#fff' }} primary="Sair" />}
+              {state && <ListItemText className={styles.white} primary="Sair" />}
             </ListItemButton>
           </ListItem>
         </List>

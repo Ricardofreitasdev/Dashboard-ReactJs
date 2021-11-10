@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import useStyles from "./style";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import FormLogin from "./components/FormLogin";
-import FormRegister from "./components/FormRegister";
+import FormRegister from "../../components/FormRegister/FormRegister";
+import FormLogin from "../../components/FormLogin/FormLogin";
 
 export function Login() {
   const styles = useStyles();
@@ -16,12 +16,15 @@ export function Login() {
       <div className={styles.container__image}>imagem</div>
       <div className={styles.container__form}>
         <div className={styles.container__form__wrapper}>
+
           <Tabs
             value={activeTabId}
             onChange={(e, id) => setActiveTabId(id)}
-            indicatorColor="secondary"
-            textColor="secondary"
+            indicatorColor="primary"
+            textColor="primary"
+            color=""
           >
+            
             <Tab label="Login" />
             <Tab label="Cadastro" />
             

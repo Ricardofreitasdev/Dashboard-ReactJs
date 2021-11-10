@@ -3,11 +3,19 @@ import { createTheme } from "@material-ui/core/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#E31C58",
+      light: "#ff2667",
+      main: "#d50644",
+      dark: "#c5003b",
+
     },
     secondary: {
-      main: "#142032",
-    },
+      light: "#0854c5",
+      main: "#042e6d",
+      dark: "#021f4b"
+    }
+  },
+  typography: {
+    fontSize: 15
   },
 });
 

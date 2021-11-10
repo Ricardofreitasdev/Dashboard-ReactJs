@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import UserContext from "../../context/UserContext";
 import api from "../../services/api";
 import useStyles from "./style";
-import Table from "./components/Table";
 import { Button } from "@material-ui/core";
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import Table from "../../components/Table/Table";
 
 export function App() {
 
@@ -29,16 +29,18 @@ export function App() {
 
   return (
     <>
+
       {loggedUser.role === 'admin' && (
         <Button
+        className={styles.button__new}
         variant="contained" 
         href="app/new"
         color="primary"
         startIcon={<PersonAddIcon />}
-        size="large"
 
         >Criar novo usuário</Button>
       )}
+
       <Table data={usersArray} user={loggedUser}/>
     </>
   );

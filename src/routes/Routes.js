@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import UserContext from "../context/UserContext";
-import { Layout } from "../pages/Layout/Layout";
+import { Layout } from "../layout/Layout";
 import { Login } from "../pages/Login/Login";
 
 export default function Routes() {
@@ -21,14 +21,9 @@ export default function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        
         <Route path="/login" component={Login} />
         <RoutesPrivate path="/app" component={Layout} />
-
-        <Route exact path="/">
-          <Redirect to="/login" />
-        </Route>
-
+        <Route exact path="/"><Redirect to="/login" /></Route>
       </Switch>
     </BrowserRouter>
   );

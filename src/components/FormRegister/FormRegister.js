@@ -2,10 +2,10 @@ import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, TextField, Typography } from "@material-ui/core";
-import useStyles from "../style";
-import api from "../../../services/api";
+import useStyles from "../../pages/Login/style";
+import api from "../../services/api";
 import { Alert } from "@mui/material";
-import UserContext from "../../../context/UserContext";
+import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router";
 
 
@@ -60,11 +60,12 @@ export default function FormRegister() {
 
   return (
     <>
-      <Typography variant="h2">Faça seu Cadastro!</Typography>
-      <form onSubmit={RegisterFormik.handleSubmit}>
+      <Typography variant="h2">Cadastre-se!</Typography>
+      <form className={styles.form} onSubmit={RegisterFormik.handleSubmit}>
         <TextField
           className={styles.container__form__input}
           fullWidth
+          variant="outlined"
           id="name"
           name="name"
           label="Nome"
@@ -78,6 +79,7 @@ export default function FormRegister() {
         <TextField
           className={styles.container__form__input}
           fullWidth
+          variant="outlined"
           id="email"
           name="email"
           label="E-mail"
@@ -93,6 +95,7 @@ export default function FormRegister() {
         <TextField
           className={styles.container__form__input}
           fullWidth
+          variant="outlined"
           id="password"
           name="password"
           label="Senha"
@@ -118,6 +121,7 @@ export default function FormRegister() {
           color="primary"
           variant="contained"
           type="submit"
+          size="large"
           disabled={
             RegisterFormik.values.password.length === 0 ||
             RegisterFormik.values.password.length === 0 ||

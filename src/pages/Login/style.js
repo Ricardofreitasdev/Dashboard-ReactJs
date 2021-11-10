@@ -22,6 +22,12 @@ export default makeStyles((theme) => ({
     justifyContent: 'center'
   },
   container__form__input: {
-     marginBottom: '25px'
+     marginBottom: '15px',
+     marginTop: '15px'
   },
+  form:{
+    display: 'flex',
+    flexDirection: 'column',
+    width: '80%'
+  }
 }));
