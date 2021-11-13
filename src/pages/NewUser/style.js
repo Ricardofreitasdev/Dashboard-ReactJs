@@ -1,7 +1,8 @@
 import { makeStyles } from "@material-ui/styles";
 
 export default makeStyles((theme) => ({
-    editUser: {
+ 
+    newUser: {
         display: 'flex',
         background: '#fff',
         flexDirection: 'column',
@@ -10,5 +11,7 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: '100%',
         justifyContent: 'center',
+
     }
+  
 }));

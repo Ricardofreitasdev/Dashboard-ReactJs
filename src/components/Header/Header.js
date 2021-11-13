@@ -29,6 +29,7 @@ export default function Header() {
           <Typography variant="h4">Dashboard</Typography>
         </div>
         <div id="teste" className={styles.header__listIcons}>
+
           <ListItemButton onClick={() => setToken(false)}>
             <ExitToAppIcon className={styles.white} />
           </ListItemButton>

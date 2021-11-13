@@ -34,9 +34,5 @@ export default makeStyles((theme) => ({
      marginBottom: '15px',
      marginTop: '15px'
   },
-  form:{
-    display: 'flex',
-    flexDirection: 'column',
-    width: '80%'
-  }
+  
 }));

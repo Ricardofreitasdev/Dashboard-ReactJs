@@ -2,19 +2,19 @@ import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { Button, TextField, Typography } from "@material-ui/core";
-import useStyles from "../../pages/Login/style";
+import useStyles from "./style";
 import api from "../../services/api";
 import { Alert } from "@mui/material";
 import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router";
 
-
-export default function FormRegister() {
+export default function FormRegister({ type }) {
   const styles = useStyles();
-  const [loginError, setLoginError] = useState("")
+  const [loginError, setLoginError] = useState("");
+  const [message, setMessage] = useState("");
+
   const { setToken } = useContext(UserContext);
   const history = useHistory();
-
 
   const validationSchema = yup.object({
     email: yup
@@ -39,17 +39,23 @@ export default function FormRegister() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      const res = await createUser(values.name, values.email, values.password);    
-      if(res.data.error){
-        setLoginError(res.data.error)
+      const res = await createUser(values.name, values.email, values.password);
+
+      if (res.data.error) {
+        setLoginError(res.data.error);
         return;
       }
 
-      if(res.data.token){
-        setToken(res.data.token);
-        return history.push('/app');
-      }
+      if (type === "complete") {
+        setMessage(true);
 
+        setTimeout(() => {
+          history.push("/app");
+        }, 1200);
+      } else {
+        setToken(res.data.token);
+        return history.push("/app");
+      }
     },
   });
 
@@ -60,8 +66,15 @@ export default function FormRegister() {
 
   return (
     <>
-      <Typography variant="h2">Cadastre-se!</Typography>
-      <form className={styles.form} onSubmit={RegisterFormik.handleSubmit}>
+      {type === "complete" ? (
+        <Typography className={styles.form__title} variant="h4">Cadastrar novo usuario!</Typography>
+      ) : (
+        <Typography variant="h2">Cadastre-se!</Typography>
+      )}
+      <form
+        className={type !== "complete" ? styles.form : styles.form__complete}
+        onSubmit={RegisterFormik.handleSubmit}
+      >
         <TextField
           className={styles.container__form__input}
           fullWidth
@@ -109,28 +122,22 @@ export default function FormRegister() {
           helperText={
             RegisterFormik.touched.password && RegisterFormik.errors.password
           }
-
-          
         />
 
-        {loginError !== "" && (
-         <Alert severity="error">{loginError}</Alert>
+        {loginError !== "" && <Alert severity="error">{loginError}</Alert>}
+        {message && (
+          <Alert severity="success">Usuario criado com sucesso!</Alert>
         )}
 
         <Button
+          className={styles.button}
           color="primary"
           variant="contained"
           type="submit"
           size="large"
-          disabled={
-            RegisterFormik.values.password.length === 0 ||
-            RegisterFormik.values.password.length === 0 ||
-            RegisterFormik.values.password.length === 0
-          }
         >
           Cadastrar
         </Button>
-        
       </form>
     </>
   );

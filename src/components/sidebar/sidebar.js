@@ -12,6 +12,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SidebarAvatar from "../Avatar/SidebarAvatar";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 import UserContext from "../../context/UserContext";
 import LayoutContext from "../../context/LayoutContext";
@@ -22,10 +23,18 @@ export default function Sidebar(props) {
 
   const user = props.user;
   const styles = useStyles();
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(1);
+
+  console.log(user);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+  };
+
+  const closeTabMobile = () => {
+    setTimeout(() => {
+      setSidebar(!sidebar);
+    }, 250);
   };
 
   return (
@@ -37,7 +46,7 @@ export default function Sidebar(props) {
       <div
         className={sidebar === true ? styles.sidebar__mobile : styles.sidebar}
       >
-        <SidebarAvatar image={image} user={user.name} />
+        <SidebarAvatar image={image} name={user.name} role={user.role} />
 
         <Divider />
         <nav className={styles.sidebar__nav}>
@@ -74,6 +83,30 @@ export default function Sidebar(props) {
             </ListItem>
 
             <Divider />
+
+            {user.role === "admin" && (
+              <>
+                <ListItem disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    to={`/app/new`}
+                    selected={selectedIndex === 1}
+                    onClick={(event) => handleListItemClick(event, 1)}
+                  >
+                    <ListItemIcon>
+                      <PersonAddIcon className={styles.white} />
+                    </ListItemIcon>
+
+                    <ListItemText
+                      className={styles.white}
+                      primary="Criar usuário"
+                    />
+                  </ListItemButton>
+                </ListItem>
+
+                <Divider />
+              </>
+            )}
 
             <ListItem disablePadding>
               <ListItemButton onClick={() => setToken(false)}>

@@ -38,7 +38,8 @@ export default makeStyles(theme => ({
         alignItems: 'center',       
         width: '100%',
         height: '10%',
-        padding: '32px'
+        padding: '32px',
+        position: 'relative'
    
     },
     sidebar__avatar__image:{
@@ -53,5 +54,10 @@ export default makeStyles(theme => ({
     },
     white: {
         color: "#fff"
+    },
+    sidebar__perfil: {
+        position: 'absolute',
+        left: '20px',
+        top: '15px'
     }
 }));

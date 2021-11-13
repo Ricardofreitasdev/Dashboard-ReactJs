@@ -8,6 +8,7 @@ import { User } from "../pages/User/User";
 
 import UserContext from "../context/UserContext";
 import Header from "../components/Header/Header";
+import NewUser from "../pages/NewUser/NewUser";
 
 export function Layout() {
   const styles = useStyles();
@@ -15,9 +16,9 @@ export function Layout() {
   const [user, setUser] = useState([]);
 
   const getUser = () => {
-    api
-      .get("user", { headers: { token: token } })
-      .then((user) => setUser(user.data));
+    api.get("user", { headers: { token: token } }).then((user) => {
+      setUser(user.data);
+    });
   };
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export function Layout() {
           {/* Aqui são exibidas as pages*/}
           <Switch>
             <Route path="/app/user/edit/:id" component={User} />
+            <Route path="/app/new" component={NewUser} />
             <Route path="/app" component={App} />
           </Switch>
         </div>

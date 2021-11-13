@@ -2,30 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import useStyles from "./style";
 import MUIDataTable from "mui-datatables";
 import { useHistory } from "react-router-dom";
-import { Alert } from "@mui/material";
-import UserContext from "../../context/UserContext";
-import api from "../../services/api";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Button } from "@material-ui/core";
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
-
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { DeleteModal } from "../DeleteModal/DeleteModal";
+import identifyId  from "../../utils/identifyId"
 export default function Table(props) {
   const styles = useStyles();
-  
-  const { token } = useContext(UserContext);
-  const history = useHistory();
 
-  const [deleted, setdeleted] = useState("");
-  const [errors, setErrors] = useState(false);
+  const history = useHistory();
 
   const usersArray = props.data;
   const loggedUser = props.user;
 
-  
   const columns = [
     {
-      name: "código do cliente",
-      label: "código do cliente",
+      name: "Id",
+      label: "Id",
       options: {
         filter: true,
         sort: true,
@@ -57,64 +49,29 @@ export default function Table(props) {
     },
   ];
 
-  const deleteUser = (Row, Data) => {
-    const id = identifyId(Row, Data);
-
-    api.delete(`delete/${id}`, { headers: { token: token } }).then((res) => {
-      if (res.data === 1) {
-        setdeleted(true);
-        return;
-      }
-      if (res.data.error) {
-        setErrors(res.data.error);
-        return;
-      }
-    });
-  };
-
   const editUser = (Row, Data) => {
     const id = identifyId(Row, Data);
     history.push(`/app/user/edit/${id}`);
   };
-
-  const identifyId = (Row, Data) => {
-    const rowDataIndexes = Object.keys(Row.lookup);
-    const transformedRowDataIndexes = rowDataIndexes.map((index) =>
-      parseInt(index)
-    );
-    const rowIds = Data.reduce((prev, cur) => {
-      if (transformedRowDataIndexes.includes(cur.dataIndex)) {
-        prev.push(cur.data[0]);
-        return prev;
-      }
-      return prev;
-    }, []);
-    return rowIds[0];
-  };
+  
 
   const options = {
     filterType: "checkbox",
     selectableRows: loggedUser.role === "admin" ? "single" : "none",
     customToolbarSelect: (selectedRows, displayData) => (
-      <div>
-        <Button
-        className={styles.button__actions}
-        variant="contained"
-        color="primary"
-        startIcon={<DeleteForeverIcon />}
-        onClick={() => deleteUser(selectedRows, displayData)}
-        >Excluir usuario
-        </Button>
-
-        <Button
-        className={styles.button__actions}
-        variant="contained"
-        color="secondary"
-        startIcon={<ModeEditIcon />}
-        onClick={() => editUser(selectedRows, displayData)}
-        >Editar usuario
-        </Button>
+      <div className={styles.button__list}>
         
+        <DeleteModal selectedRows={selectedRows} displayData={displayData} />
+      
+        <Button
+          className={styles.button__actions}
+          variant="contained"
+          color="secondary"
+          startIcon={<ModeEditIcon />}
+          onClick={() => editUser(selectedRows, displayData)}
+        >
+          Editar usuario
+        </Button>
       </div>
     ),
     textLabels: {
@@ -155,14 +112,13 @@ export default function Table(props) {
 
   return (
     <>
-      {errors && <Alert severity="error">Você não pode se excluir</Alert>}
-      {deleted && (
-        <Alert severity="success">Usuario excluído com sucesso</Alert>
-      )}
-
       <MUIDataTable
         className={styles.table}
-        title={loggedUser.role === "admin" ? "Gerenciar usuários" : "Lista de usuários"}
+        title={
+          loggedUser.role === "admin"
+            ? "Gerenciar usuários"
+            : "Lista de usuários"
+        }
         data={usersArray}
         columns={columns}
         options={options}

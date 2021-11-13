@@ -7,7 +7,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import useStyles from "../../pages/Login/style";
+import useStyles from "./style";
 import UserContext from "../../context/UserContext";
 import { useHistory } from "react-router";
 import api from "../../services/api";
@@ -35,7 +35,7 @@ export default function FormLogin() {
 
   async function login(email, password) {
     const response = await api.post("auth", { email, password });
-    return response;
+    return response.data;
   }
 
   const formik = useFormik({
@@ -49,14 +49,15 @@ export default function FormLogin() {
       try {
         const res = await login(values.email, values.password);
 
-        if (res.data.error) {
+        if (res.error) {
           setLoading(false);
-          setLoginError(res.data.error);
+          setLoginError(res.error);
           return;
         }
 
-        setToken(res.data.token);
+        setToken(res.token);
         return history.push("/app");
+
       } catch (error) {
         setLoading(false);
         setLoginError("Problemas na conexão com o servidor");
@@ -98,7 +99,11 @@ export default function FormLogin() {
 
         {loginError !== "" && <Alert severity="error">{loginError}</Alert>}
 
-        <Button color="primary" size="large" variant="contained" type="submit">
+        <Button className={styles.button}
+        color="primary"
+        size="large"
+        variant="contained"
+        type="submit">
           Enviar
         </Button>
       </form>
