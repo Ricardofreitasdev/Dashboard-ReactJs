@@ -82,7 +82,6 @@ export function FormUpdate({ user, profile }) {
   const handleUploadFile = (e) => {
    const isValidImage = e.target.files[0];
 
-   console.log(isValidImage);
 
    if(isValidImage.size > 300000){
     setImageError('Tamanho invalido, máximo 300 kb');
@@ -188,7 +187,6 @@ export function FormUpdate({ user, profile }) {
             <FormLabel component="legend">Perfil</FormLabel>
             <RadioGroup
               row
-              aria-label="gender"
               name="role"
               value={formik.values.role === "admin" ? "admin" : "user"}
               onChange={formik.handleChange}
