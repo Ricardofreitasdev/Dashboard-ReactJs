@@ -32,4 +32,44 @@ export default makeStyles((theme) => ({
   message: {
     marginTop: "15px !important",
   },
+  wrapper__image: {
+    width: "100px",
+    height: "100px",
+    margin: "0 auto",
+    marginBottom: "25px",
+    borderRadius: "8px",
+    overflow: "hidden",
+
+    "& img": {
+      maxWidth: "100%",
+    },
+  },
+
+  image: {
+    padding: "16px",
+    borderRadius: "8px",
+    display: "flex",
+    alignItems: "center",
+    background: "#f6f6f7",
+
+    "& label": {
+      display: "flex",
+      alignItems: "center",
+      cursor: "pointer",
+      color: '#fff',
+      padding: "5px",
+      background: `${theme.palette.secondary.main} !important`,
+      padding: "10px",
+      marginRight: "25px",
+      borderRadius: '4px',
+
+      "&:hover": {
+        background: `${theme.palette.secondary.dark} !important`,
+      },
+    },
+
+    "& p": {
+      marginRight: "10px",
+    },
+  },
 }));

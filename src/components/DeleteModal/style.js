@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 export default makeStyles((theme) => ({
     button: {
         marginRight: '20px !important',
-        background: `${theme.palette.primary.main} !important`
+        background: `${theme.palette.primary.main} !important`,
     },
     modal: {
         '& #cancel': {

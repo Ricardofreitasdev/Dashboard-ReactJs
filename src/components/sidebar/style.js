@@ -48,9 +48,13 @@ export default makeStyles(theme => ({
     ,
     sidebar__avatar__wrapper:{
         height: '50px',
+        width: '50px',
         overflow: 'hidden',
         borderRadius: '8px',
-        border: `2px solid ${theme.palette.secondary.light}`
+        border: `2px solid ${theme.palette.secondary.light}`,
+        display: 'flex',
+        justifyContent: 'center',
+        backgroundColor: '#fff'
     },
     white: {
         color: "#fff"

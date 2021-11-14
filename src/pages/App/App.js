@@ -31,8 +31,11 @@ export function App() {
     getAllUseres();
   }, []);
 
+  console.log('carrega');
+
   const usersArray = users.map(Object.values);
 
+  
   return (
     <>
       {loggedUser.role === "admin" && (

@@ -38,8 +38,7 @@ export function User() {
     <>
       {user.role === "admin" || user.id === updatedataUser.id? (
         <div className={styles.editUser}>
-          <FormUpdate user={updatedataUser} profile={user}/>
-      
+          <FormUpdate user={updatedataUser} profile={user} auth={token} />
         </div>
       ) : (
         <Alert severity="error">Ação indisponível para seu perfil!</Alert>

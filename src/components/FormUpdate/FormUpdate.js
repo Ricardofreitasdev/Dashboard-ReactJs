@@ -24,6 +24,9 @@ import FormLabel from "@mui/material/FormLabel";
 import api from "../../services/api";
 import { Alert } from "@mui/material";
 import { useHistory } from "react-router";
+import imageDefault from "../../assets/images/user.png";
+import { Input, InputLabel } from "@material-ui/core";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 
 import { ModalPassword } from "../ModalPassword/ModalPassword";
 
@@ -34,6 +37,9 @@ export function FormUpdate({ user, profile }) {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
+
+
+
   const validationSchema = yup.object({
     email: yup
       .string("seu e-mail...")
@@ -70,22 +76,55 @@ export function FormUpdate({ user, profile }) {
     },
   });
 
+  const [image, setImage] = useState();
+  const [imageError, setImageError] = useState("")
+
+  const handleUploadFile = (e) => {
+   const isValidImage = e.target.files[0];
+
+   console.log(isValidImage);
+
+   if(isValidImage.size > 300000){
+    setImageError('Tamanho invalido, máximo 300 kb');
+    setImage(null)
+   } else {
+     setImageError('');
+     setImage(e.target.files[0])  
+   }
+  };
+
   async function update({ name, email, role }) {
-    const data = { name, email, role };
+    const formData = new FormData();
+    formData.append("avatar", image);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("role", role);
 
     const headers = {
-      headers: { token: token },
+      headers: {
+        token: token,
+        "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+      },
     };
 
-    const response = await api.put(`user/${user.id}`, data, headers);
+    const response = await api.put(`user/${user.id}`, formData, headers);
     return response.data;
   }
 
   return (
     <>
+      <div className={styles.wrapper__image}>
+        {user.avatar ? (
+          <img src={user.avatar}></img>
+        ) : (
+          <img src={imageDefault}></img>
+        )}
+      </div>
+
       <Typography className={styles.form__title} variant="h4">
         Atualizar cadastro
       </Typography>
+
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <TextField
           className={styles.user__form__input}
@@ -118,11 +157,34 @@ export function FormUpdate({ user, profile }) {
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
+          helperText="O campo e-mail não pode ser alterado"
         />
 
+        <div className={styles.image}>
+          <InputLabel htmlFor="import-button">
+            <Input
+              id="import-button"
+              inputProps={{
+                accept: "image/*",
+              }}
+              onChange={handleUploadFile}
+              style={{ display: "none" }}
+              type="file"
+            />
+            Upload
+            <AddAPhotoIcon sx={{ color: "#fff", ml:1 }} />
+          </InputLabel>
+          <small>{image ? image.name : ""}</small>
+          
+        </div>
+          {imageError && (
+          <Alert className={styles.message} severity="error">
+            {imageError}
+          </Alert>
+        )}
+
         {profile.role === "admin" && (
-          <FormControl component="fieldset">
+          <FormControl sx={{ mt: '25px' }} component="fieldset">
             <FormLabel component="legend">Perfil</FormLabel>
             <RadioGroup
               row
@@ -151,10 +213,10 @@ export function FormUpdate({ user, profile }) {
             type="submit"
             className={styles.button}
           >
-            Enviar
+            Atualizar Dados
           </Button>
 
-          <ModalPassword />
+          <ModalPassword user={user} profile={profile} />
         </div>
 
         {message && (

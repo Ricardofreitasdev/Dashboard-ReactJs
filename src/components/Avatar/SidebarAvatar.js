@@ -1,15 +1,19 @@
-import { Divider, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import useStyles from "../sidebar/style";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import PersonIcon from "@mui/icons-material/Person";
+import imageDefault from "../../assets/images/user.png";
+
 export default function SidebarAvatar({ image, name, role }) {
   const styles = useStyles();
   return (
     <div className={styles.sidebar__avatar}>
       <div className={styles.sidebar__avatar__wrapper}>
-        <img className={styles.sidebar__avatar__image} src={image} />
+        <img
+          className={styles.sidebar__avatar__image}
+          src={image ? image : imageDefault}
+        />
       </div>
       <Box sx={{ ml: 2 }}>
         <Typography

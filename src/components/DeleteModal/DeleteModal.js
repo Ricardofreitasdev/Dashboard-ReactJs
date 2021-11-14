@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -12,9 +12,8 @@ import api from "../../services/api";
 import { Alert } from "@mui/material";
 import { createBrowserHistory } from "history";
 import UserContext from "../../context/UserContext";
-import identifyId from "../../utils/identifyId";
 
-export function DeleteModal({ selectedRows, displayData }) {
+export function DeleteModal({ user }) {
   const styles = useStyles();
   const { token } = useContext(UserContext);
   const [open, setOpen] = React.useState(false);
@@ -22,8 +21,8 @@ export function DeleteModal({ selectedRows, displayData }) {
   const [errors, setErrors] = React.useState(false);
   const history = createBrowserHistory();
 
-  const deleteUser = (Row, Data) => {
-    const id = identifyId(Row, Data);
+  const deleteUser = (user) => {
+    const id = user;
 
     api.delete(`delete/${id}`, { headers: { token: token } }).then((res) => {
       if (res.data === 1) {
@@ -62,9 +61,8 @@ export function DeleteModal({ selectedRows, displayData }) {
         className={styles.button}
         onClick={handleClickOpen}
         variant="contained"
-        startIcon={<DeleteForeverIcon />}
       >
-        Excluir usuário
+        <DeleteForeverIcon />
       </Button>
 
       <Dialog
@@ -93,7 +91,7 @@ export function DeleteModal({ selectedRows, displayData }) {
           <Button
             variant="text"
             id="delete"
-            onClick={() => deleteUser(selectedRows, displayData)}
+            onClick={() => deleteUser(user)}
             autoFocus
           >
             Excluir

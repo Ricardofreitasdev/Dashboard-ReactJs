@@ -29,6 +29,11 @@ export default makeStyles(theme => ({
 
     },
     button__actions: {
-      marginRight: '10px'
+      marginRight: '10px',
+    },
+    avatar: {
+      width: "50px",
+      borderRadius: '8px',
+      overflow: 'hidden',
     }
   }));
