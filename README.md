@@ -1,1 +1,1 @@
-Front-end com React - Projeto em desenvolvimento
+Front-end com React
