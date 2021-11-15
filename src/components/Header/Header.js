@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import useStyles from "./style";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -13,6 +13,7 @@ export default function Header() {
   const { setToken } = useContext(UserContext);
   const { sidebar, setSidebar } = useContext(LayoutContext);
 
+
   return (
     <header className={styles.header}>
       <nav>
@@ -22,7 +23,10 @@ export default function Header() {
             alignItems="center"
             sx={{ mr:2, padding: 1 }}
             className={styles.header__menu}
-            onClick={() => setSidebar(!sidebar)}
+            onClick={() => {
+              setSidebar(!sidebar)
+
+            }}
           >
             <MenuIcon />
           </ListItemButton>

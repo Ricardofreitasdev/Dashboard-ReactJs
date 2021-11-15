@@ -10,5 +10,13 @@ export default makeStyles((theme) => ({
         width: '100%',
         height: '100%',
         justifyContent: 'center',
+
+        [theme.breakpoints.down('sm')]: {
+            padding: '16px',
+            justifyContent: 'start',
+
+          }
+
+        
     }
 }));

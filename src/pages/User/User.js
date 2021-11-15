@@ -29,10 +29,12 @@ export function User() {
     });
   };
 
+
   useEffect(() => {
     getUserById(id);
     getUser()
   }, []);
+
 
   return (
     <>

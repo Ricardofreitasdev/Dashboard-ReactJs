@@ -57,7 +57,6 @@ export default function FormLogin() {
 
         setToken(res.token);
         return history.push("/app");
-
       } catch (error) {
         setLoading(false);
         setLoginError("Problemas na conexão com o servidor");
@@ -67,7 +66,7 @@ export default function FormLogin() {
 
   return (
     <>
-      <Typography variant="h2">Faça Login!</Typography>
+      <Typography variant="h3">Faça Login!</Typography>
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <TextField
           className={styles.container__form__input}
@@ -95,15 +94,21 @@ export default function FormLogin() {
           helperText={formik.touched.password && formik.errors.password}
         />
 
-        {loading && <CircularProgress />}
+        {loading && (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <CircularProgress />
+          </div>
+        )}
 
         {loginError !== "" && <Alert severity="error">{loginError}</Alert>}
 
-        <Button className={styles.button}
-        color="primary"
-        size="large"
-        variant="contained"
-        type="submit">
+        <Button
+          className={styles.button}
+          color="primary"
+          size="large"
+          variant="contained"
+          type="submit"
+        >
           Enviar
         </Button>
       </form>

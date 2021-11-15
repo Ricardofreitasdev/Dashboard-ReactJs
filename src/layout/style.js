@@ -12,6 +12,9 @@ export default makeStyles((theme) => ({
   container: {
     backgroundColor: "#e8e6f0",
     padding: "32px",
-    height: '90%'
+    height: '90%',
+    [theme.breakpoints.down('sm')]: {
+      padding:"16px",
+    }
   },
 }));

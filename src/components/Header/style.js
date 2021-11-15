@@ -24,6 +24,11 @@ export default makeStyles((theme) => ({
       justifyContent: "space-between",
       width: "100%",
 
+      [theme.breakpoints.down("sm")]: {
+        marginLeft: "16px",
+        marginRight: "16px",
+      },
+
       "& div": {
         display: "flex",
       },

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 
 import useStyles from "./style";
 
@@ -105,7 +105,7 @@ export function ModalPassword({ user, profile }) {
         onClick={handleClickOpen}
         className={styles.button}
       >
-        Atualizar Senha
+       <p style={{ margin: 0, padding: 0 }}>Atualizar senha</p>
       </Button>
 
       {profile.id === user.id ? (

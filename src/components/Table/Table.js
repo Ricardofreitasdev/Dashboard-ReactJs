@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import useStyles from "./style";
 import MUIDataTable from "mui-datatables";
 import { useHistory } from "react-router-dom";
@@ -25,7 +25,7 @@ export default function Table(props) {
             sort: false,
             customBodyRender: (val) => {
               return (
-                <img
+                <img alt="avatar"
                   className={styles.avatar}
                   src={val ? val : defaultImage}
                 ></img>
@@ -90,7 +90,7 @@ export default function Table(props) {
             sort: false,
             customBodyRender: (val) => {
               return (
-                <img
+                <img alt="avatar"
                   className={styles.avatar}
                   src={val ? val : defaultImage}
                 ></img>

@@ -33,9 +33,9 @@ export default function FormRegister({ type }) {
 
   const RegisterFormik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      password: "",
+      name: "Seu nome",
+      email: "seu@email.com",
+      password: "123456",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -69,7 +69,7 @@ export default function FormRegister({ type }) {
       {type === "complete" ? (
         <Typography className={styles.form__title} variant="h4">Cadastrar novo usuario!</Typography>
       ) : (
-        <Typography variant="h2">Cadastre-se!</Typography>
+        <Typography variant="h3">Cadastre-se!</Typography>
       )}
       <form
         className={type !== "complete" ? styles.form : styles.form__complete}
@@ -112,7 +112,7 @@ export default function FormRegister({ type }) {
           id="password"
           name="password"
           label="Senha"
-          type="password"
+          type="text"
           value={RegisterFormik.values.password}
           onChange={RegisterFormik.handleChange}
           error={

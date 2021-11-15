@@ -8,6 +8,14 @@ export default makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     width: "60%",
     height: "100vh",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems:'center',
+
+    '& img': {
+      opacity: '0.4',
+      width: '50%'
+    },
 
     [theme.breakpoints.down('sm')]: {
       display: 'none',
@@ -28,7 +36,11 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+
+    [theme.breakpoints.down('sm')]: {
+      padding: '16px',
+    },
   },
   container__form__input: {
      marginBottom: '15px',

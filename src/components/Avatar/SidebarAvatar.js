@@ -11,6 +11,7 @@ export default function SidebarAvatar({ image, name, role }) {
     <div className={styles.sidebar__avatar}>
       <div className={styles.sidebar__avatar__wrapper}>
         <img
+          alt="avatar"
           className={styles.sidebar__avatar__image}
           src={image ? image : imageDefault}
         />

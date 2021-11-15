@@ -21,7 +21,20 @@ export default makeStyles((theme) => ({
     form:{
         display: 'flex',
         flexDirection: 'column',
-        width: '80%'
+        width: '80%',
+
+        [theme.breakpoints.down('sm')]: {
+          width: "100%",
+        },
+        '& .MuiOutlinedInput-input':{
+          padding: '15px',
+  
+          [theme.breakpoints.down("sm")]: {
+            padding: '10px',
+            
+          },          
+      },
+      
       },
       form__complete:{
         display: 'flex',
@@ -31,7 +44,16 @@ export default makeStyles((theme) => ({
         margin: '0 auto',
         [theme.breakpoints.down('sm')]: {
           width: "100% !important",
-        }
+        },
+        '& .MuiOutlinedInput-input':{
+          padding: '15px',
+  
+          [theme.breakpoints.down("sm")]: {
+            padding: '10px'    
+          },
+
+        },
+        
       },
       form__title: {
         textAlign: 'center',

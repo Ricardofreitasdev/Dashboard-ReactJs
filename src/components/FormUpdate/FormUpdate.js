@@ -1,18 +1,14 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 
 import useStyles from "./style";
 import {
   Button,
-  CircularProgress,
-  Fab,
   InputAdornment,
   TextField,
   Typography,
 } from "@material-ui/core";
 
 import { useFormik } from "formik";
-import * as yup from "yup";
-
 import SendIcon from "@mui/icons-material/Send";
 import UserContext from "../../context/UserContext";
 
@@ -32,24 +28,10 @@ import { ModalPassword } from "../ModalPassword/ModalPassword";
 
 export function FormUpdate({ user, profile }) {
   const styles = useStyles();
-  const [loading, setLoading] = useState(false);
   const { token } = useContext(UserContext);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const history = useHistory();
-
-
-
-  const validationSchema = yup.object({
-    email: yup
-      .string("seu e-mail...")
-      .email("formato de e-mail inválido")
-      .required("Campo e-mail é obrigatório"),
-    password: yup
-      .string("sua senha...")
-      .min(6, "A senhas deve conter 6 digitos")
-      .required("Campo senha é obrigatória"),
-  });
 
   const enableReinitialize = true;
 
@@ -114,9 +96,9 @@ export function FormUpdate({ user, profile }) {
     <>
       <div className={styles.wrapper__image}>
         {user.avatar ? (
-          <img src={user.avatar}></img>
+          <img alt="avatar" src={user.avatar}></img>
         ) : (
-          <img src={imageDefault}></img>
+          <img alt="avatar" src={imageDefault}></img>
         )}
       </div>
 
@@ -201,8 +183,6 @@ export function FormUpdate({ user, profile }) {
           </FormControl>
         )}
 
-        {loading && <CircularProgress />}
-
         <div className={styles.form__buttons}>
           <Button
             color="primary"
@@ -211,7 +191,7 @@ export function FormUpdate({ user, profile }) {
             type="submit"
             className={styles.button}
           >
-            Atualizar Dados
+            <p style={{ margin: 0, padding: 0 }}>Atualizar Dados</p>
           </Button>
 
           <ModalPassword user={user} profile={profile} />

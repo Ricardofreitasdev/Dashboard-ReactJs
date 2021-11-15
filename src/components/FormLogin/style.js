@@ -21,6 +21,16 @@ export default makeStyles((theme) => ({
     form:{
         display: 'flex',
         flexDirection: 'column',
-        width: '80%'
+        width: '80%',
+        [theme.breakpoints.down('sm')]: {
+          width: "100%",
+        },
+        '& .MuiOutlinedInput-input':{
+          padding: '15px',
+  
+          [theme.breakpoints.down("sm")]: {
+            padding: '10px',
+          },
+      },
       }
 }));

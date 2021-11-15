@@ -12,14 +12,11 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import SidebarAvatar from "../Avatar/SidebarAvatar";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import { createBrowserHistory } from "history";
-
 
 import UserContext from "../../context/UserContext";
 import LayoutContext from "../../context/LayoutContext";
 
 export default function Sidebar(props) {
-  const history = createBrowserHistory(); 
   const { setToken } = useContext(UserContext);
   const { sidebar, setSidebar } = useContext(LayoutContext);
 
@@ -27,21 +24,34 @@ export default function Sidebar(props) {
   const styles = useStyles();
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
   };
 
 
+  const closeSideBar = () => {
+    const { innerWidth: width } = window;
+    if (width < 960) {
+      setTimeout(() => {
+        setSidebar(!sidebar);
+      }, 250);
+    }
+  };
 
   return (
     <>
       <div
-        onClick={() => setSidebar(!sidebar)}
-        className={sidebar === true ? styles.sidebar__closer : ""}
+        onClick={()=> {
+          closeSideBar()
+        }}
+        className={sidebar === false ? styles.sidebar__closer : ""}
       ></div>
       <div
-        className={sidebar === true ? styles.sidebar__mobile : styles.sidebar}
+        className={
+          sidebar === false
+            ? styles.sidebar__mobile  
+            : styles.sidebar
+        }
       >
         <SidebarAvatar image={user.avatar} name={user.name} role={user.role} />
 
@@ -50,10 +60,13 @@ export default function Sidebar(props) {
           <List>
             <ListItem disablePadding>
               <ListItemButton
-                to={'/app'}
+                to={"/app"}
                 component={Link}
                 selected={selectedIndex === 0}
-                onClick={(event) => handleListItemClick(event, 0)}              
+                onClick={(event) => {
+                  handleListItemClick(event, 0);
+                  closeSideBar()
+                }}
               >
                 <ListItemIcon>
                   <SupervisorAccountIcon className={styles.white} />
@@ -66,10 +79,13 @@ export default function Sidebar(props) {
 
             <ListItem disablePadding>
               <ListItemButton
-                component={Link}              
+                component={Link}
                 to={`/app/user/edit/${user.id}`}
                 selected={selectedIndex === 1}
-                onClick={(event) => handleListItemClick(event, 1)}
+                onClick={(event) => {
+                  handleListItemClick(event, 1);
+                  closeSideBar()
+                }}
               >
                 <ListItemIcon>
                   <PersonIcon className={styles.white} />
@@ -88,7 +104,10 @@ export default function Sidebar(props) {
                     component={Link}
                     to={`/app/new`}
                     selected={selectedIndex === 2}
-                    onClick={(event) => handleListItemClick(event, 2)}
+                    onClick={(event) => {
+                      handleListItemClick(event, 2);
+                      closeSideBar()
+                    }}
                   >
                     <ListItemIcon>
                       <PersonAddIcon className={styles.white} />

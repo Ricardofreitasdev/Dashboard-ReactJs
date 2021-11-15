@@ -11,7 +11,8 @@ export default makeStyles(theme => ({
       [theme.breakpoints.down("sm")]: {
         '& .MuiTypography-subtitle1': {
           display: 'none !important',
-        }
+        },
+        marginTop: '16px'
       },
 
       

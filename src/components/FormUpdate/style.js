@@ -11,6 +11,13 @@ export default makeStyles((theme) => ({
     width: "50% !important",
     justifyContent: "center",
     margin: "0 auto",
+    '& .MuiOutlinedInput-input':{
+        padding: '15px',
+
+        [theme.breakpoints.down("sm")]: {
+          padding: '10px',
+        },
+    },
     [theme.breakpoints.down("sm")]: {
       width: "100% !important",
     },
@@ -24,6 +31,21 @@ export default makeStyles((theme) => ({
     padding: "15px",
     boxShadow: "none",
     width: "40%",
+    [theme.breakpoints.down("sm")]: {
+      height: '50px',
+      padding: "10px",
+      width: '25%',
+
+
+      '& p':{
+        display: 'none',
+      },
+
+      '& .MuiButton-startIcon': {
+        marginRight: '0px',
+        marginLeft: '0px'
+      }
+    },
   },
   form__buttons: {
     display: "flex",
@@ -57,8 +79,7 @@ export default makeStyles((theme) => ({
       alignItems: "center",
       cursor: "pointer",
       color: '#fff',
-      padding: "5px",
-      background: `${theme.palette.secondary.main} !important`,
+      background: `#1f67d3!important`,
       padding: "10px",
       marginRight: "25px",
       borderRadius: '4px',

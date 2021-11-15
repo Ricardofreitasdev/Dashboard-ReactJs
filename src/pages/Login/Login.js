@@ -1,10 +1,11 @@
-import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React, { useState } from "react";
 import useStyles from "./style";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import FormRegister from "../../components/FormRegister/FormRegister";
 import FormLogin from "../../components/FormLogin/FormLogin";
+import  LoginImage  from "../../assets/images/login.svg"
 
 export function Login() {
   const styles = useStyles();
@@ -13,7 +14,9 @@ export function Login() {
 
   return (
     <Grid container className={styles.container}>
-      <div className={styles.container__image}>imagem</div>
+      <div className={styles.container__image}>
+         <img alt="imagem de login" src={LoginImage} />
+      </div>
       <div className={styles.container__form}>
         <div className={styles.container__form__wrapper}>
 
